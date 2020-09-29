@@ -52,7 +52,6 @@ class GraphParser {
 				matrix[i][j] = Integer.parseInt(edges[j]);
 			}
 		}
-
 		return matrix;
 	}
 

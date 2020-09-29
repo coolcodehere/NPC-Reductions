@@ -1,6 +1,3 @@
-import java.util.Scanner;
-import java.io.File;
-
 class Graph {
 	public int size;
 	public int[][] matrix;
