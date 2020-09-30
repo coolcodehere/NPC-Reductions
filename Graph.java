@@ -1,18 +1,50 @@
 class Graph {
-	public int size;
-	public int[][] matrix;
+	private int numVertex;
+	private int numEdges;
+	private int[][] adjMatrix;
 
-	public Graph(int size, int[][] matrix) {
-		this.size = size;
-		this.matrix = matrix;
+	/***********CONSTRUCTORS***********/
+	public Graph() {
+		numVertex = 0;
+		numEdges = 0;
+		adjMatrix = null;
+	}
+
+	public Graph(int numV, int numE, int[][] matrix) {
+		numVertex = numV;
+		numEdges = numE;
+		adjMatrix = matrix;
 	}	
 
+	/***********METHODS***********/
+	public Graph findClique() {
+		return new Graph();
+	}
+
+	public String toString() {
+		return "(" + numVertex + ", " + numEdges + ")";
+	}
+
 	public void printGraph() {
-		for (int i = 0; i < size; i++) {
-			for (int j = 0; j < size; j++) {
-				System.out.print(matrix[i][j] + " ");
+		System.out.println(toString());
+		for (int i = 0; i < numVertex; i++) {
+			for (int j = 0; j < numVertex; j++) {
+				System.out.print(adjMatrix[i][j] + " ");
 			}
 			System.out.println();
 		}
+	}
+
+	/***********GETTERS***********/
+	public int getNumEdges() {
+		return numEdges;
+	}
+
+	public int getNumVertex() {
+		return numVertex;
+	}
+
+	public int[][] getAdjMatrix() {
+		return adjMatrix;
 	}
 }

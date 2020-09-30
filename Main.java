@@ -6,11 +6,10 @@ class Main {
     GraphParser gr = new GraphParser(filename);
 	ArrayList<Graph> graphs = gr.getGraphs();
 
-	// for (Graph graph : graphs) {
-	// 	System.out.println(graph.size);
-	// 	graph.printGraph();
-	// 	System.out.println();
-	// }
+	for (Graph graph : graphs) {
+		graph.printGraph();
+		System.out.println();
+	}
 	
   }
 }
