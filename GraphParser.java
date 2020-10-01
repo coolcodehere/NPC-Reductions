@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.lang.Integer;
 
 // This class exists to parse the input file and generate an arraylist of graphs from it. 
-class GraphParser {
+public class GraphParser {
 	private ArrayList<Graph> graphArray;
 	private File graphFile;
 
@@ -18,9 +18,7 @@ class GraphParser {
 		Scanner scan = null;
 		try {
 			scan = new Scanner(graphFile);
-		} catch (Exception e) {
-
-		}
+		} catch (Exception e) {}
 		
 		// Since the first line is known to be a size, get the first line here. 
 		int numVertex = Integer.parseInt(scan.nextLine());
@@ -46,11 +44,11 @@ class GraphParser {
 		String[] lines = data.split("\n");
 		int numEdges = 0;
 
-		for (int i = 0; i < numVertex; i++) {
-			String[] edges = lines[i].split(" ");
-			for (int j = 0; j < numVertex; j++) {
-				matrix[i][j] = Integer.parseInt(edges[j]);
-				if (matrix[i][j] == 1 && i != j) {
+		for (int row = 0; row < numVertex; row++) {
+			String[] edges = lines[row].split(" ");
+			for (int col = 0; col < numVertex; col++) {
+				matrix[row][col] = Integer.parseInt(edges[col]);
+				if (matrix[row][col] == 1 && row < col) {
 					numEdges++;
 				}
 			}

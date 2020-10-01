@@ -1,11 +1,11 @@
-import java.util.ArrayList;
+import java.util.Set;
 
 public class Clique {
-    private ArrayList<String> vertices;
-    private int ms;
+    private Set<String> vertices;
+    private long ms;
 
     /***********CONSTRUCTORS***********/
-    public Clique(ArrayList<String> vertices, int ms) {
+    public Clique(Set<String> vertices, long ms) {
         this.vertices = vertices;
         this.ms = ms;
     }
@@ -14,21 +14,18 @@ public class Clique {
     public String toString() {
         String temp = "{";
         for (String vertex : vertices) {
-            temp += vertex;
-            if (!vertex.equals(vertices.get(vertices.size() - 1))) {
-                temp += ",";
-            }
+            temp += vertex + ",";
         }
-        temp += "} (size=" + vertices.size() + ", ms=" + ms + ")";
+        temp += "\b} (size=" + vertices.size() + ", ms=" + ms + ")";
         return temp;
     }
 
     /***********GETTERS***********/
-    public ArrayList<String> getVertices() {
+    public Set<String> getVertices() {
         return vertices;
     }
 
-    public int getMS() {
+    public long getMS() {
         return ms;
     }
 }
