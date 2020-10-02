@@ -1,7 +1,7 @@
-public class CNFtoGraph {
+public class cnfToGraph {
     private CNF cnf;
 
-    public CNFtoGraph(CNF cnf) {
+    public cnfToGraph(CNF cnf) {
         this.cnf = cnf;
     }
 
@@ -46,7 +46,7 @@ public class CNFtoGraph {
             clauseIdx = (int)(Math.ceil(graphIndex / cnf.numTerms) - 1);
         }
 
-        return cnf.getClause(clauseIdx)[termIdx];
+        return cnf.getTerm(clauseIdx, termIdx);
     }
 
     private void connectClause(Graph graph) {
