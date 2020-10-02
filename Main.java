@@ -14,4 +14,5 @@ class Main {
 	
 	cnfs.get(0).printCNF();
   }
+
 }

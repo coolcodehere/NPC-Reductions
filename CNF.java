@@ -13,6 +13,10 @@ class CNF {
 		return cnf[i];
 	}
 
+	public int getTerm(int clauseIndex, int termIndex) {
+		return getClause(clauseIndex)[termIndex];
+	}
+
 	public void printCNF() {
 		for (int[] arr : cnf) {
 			for (int term : arr) {
