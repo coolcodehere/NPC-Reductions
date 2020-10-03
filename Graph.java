@@ -1,6 +1,6 @@
 import java.security.InvalidParameterException;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public class Graph {
 	private int numVertex;
@@ -19,42 +19,45 @@ public class Graph {
         if (k <= 0) {
 			throw new InvalidParameterException();
 		}
-		Set<String> vertices = new HashSet<String>();
+		ArrayList<Integer> vertices = new ArrayList<Integer>();
 		Clique clique;
-		int bottomright;
-		boolean complete;
+		boolean completecol;
 		long start = System.currentTimeMillis();
 		//find k-clique (i.e. a square submatrix of size k where all entries are 1)
 		if (k > 1 && k <= numVertex) { //if k is greater than 1, then try to find a k-clique.
-			for (int topleft = 0; topleft < numVertex; topleft++) {
-				bottomright = topleft + k - 1;
-				complete = true;
-				if (bottomright < numVertex) {
-					vertices.add(String.valueOf(topleft));
-					for (int row = topleft; row < bottomright; row++) {
-						for (int col = row + 1; col <= bottomright; col++) {
+			for (int topleft = 0; topleft < numVertex; topleft++) { //start at every point on the main diagonal
+				if (topleft + k - 1 < numVertex) { //search for a clique starting at the current top left if there are enough vertices
+					vertices.add(topleft);
+					completecol = true;
+					for (int col = topleft + 1; col != topleft; col++, col%=numVertex) {
+						for (int row : vertices) {
 							if (adjMatrix[row][col] == 0) {
-								complete = false;
+								completecol = false;
 								break;
-							}
-							vertices.add(String.valueOf(col));
+							} 
 						}
-						if (!complete) {
-							vertices.clear();
-							break;
+						if (completecol) { //if we looked down the column and found all 1's then add it
+							vertices.add(col);
 						}
+						if (vertices.size() == k) break; //this means we have found a cliuqe so stop looking
+						completecol = true;
 					}
-					if (complete) break;
-				} else {
+					if (vertices.size() < k) { //we did not find a clique so try again with a new top left
+						vertices.clear();
+					} else { //otherwise we found a clique
+						break;
+					}
+				} else { //otherwise there are not enough vertices so do not bother looking for a clique
 					break;
 				}
 			}
 		} else if (k == 1) { //if k is 1, then just return the first vertex.
-			vertices.add("0");
+			vertices.add(0);
 		}
 		long end = System.currentTimeMillis();
 		long ms = end - start;
 		if (vertices.size() > 0) {
+			Collections.sort(vertices);
 			clique = new Clique(vertices, ms);
 		} else { //otherwise k is greater than numVertex, so return null
 			clique = null;
