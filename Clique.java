@@ -1,9 +1,11 @@
+import java.sql.SQLOutput;
 import java.util.*;
 import java.lang.*;
 
 public class Clique {
   //Current max clique
   List<Integer> max = new ArrayList<>();
+  List<List<Integer>> cliques = new ArrayList<>();
   long ms = System.currentTimeMillis();
   Graph graph;
 
@@ -12,21 +14,34 @@ public class Clique {
   }
 
   public List<Integer> findMaxClique() {
-      Set<Integer> r = new HashSet<>();
       Set<Integer> p = new HashSet<>();
-      Set<Integer> x = new HashSet<>();
       for (int i = 0; i < graph.size; i++) {
         p.add(i);
       }
-      bronKerbosh(p, r, x);
+      bronKerbosh(p, new HashSet<>(), new HashSet<>(), -1);
       ms =  System.currentTimeMillis() - ms;
     return max;
   }
 
-  public void bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x) {
-    if (union(p, x).isEmpty() && r.size() > max.size()) {
-      max = new ArrayList<>();
-      max.addAll(r);
+  public List<List<Integer>> findKClique(int n) {
+    Set<Integer> p = new HashSet<>();
+    for (int i = 0; i < graph.size; i++) {
+      p.add(i);
+    }
+    bronKerbosh(p, new HashSet<>(), new HashSet<>(), n);
+    ms =  System.currentTimeMillis() - ms;
+    return cliques;
+  }
+
+  public void bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x, int n) {
+    if (union(p, x).isEmpty()) {
+      if (r.size() == n) {
+        cliques.add(setToList(r));
+      }
+
+      if (r.size() > max.size()) {
+        max = setToList(r);
+      }
     }
 
     Object[] pArr = p.toArray();
@@ -37,7 +52,7 @@ public class Clique {
       newR.addAll(r);
       newR.add(v);
 
-      bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)));
+      bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)), n);
       p.remove(v);
       x.add(v);
     }
@@ -50,7 +65,13 @@ public class Clique {
     return unionSet;
   }
 
-  public Set<Integer> intersect(Set<Integer> a, Set<Integer> b) {
+  private List<Integer> setToList(Set<Integer> set) {
+    List<Integer> out = new ArrayList<>();
+    out.addAll(set);
+    return out;
+  }
+
+  private Set<Integer> intersect(Set<Integer> a, Set<Integer> b) {
     Set<Integer> intersectSet = new HashSet<>();
 
     for (int num : a) {
@@ -76,25 +97,5 @@ public class Clique {
       }
     }
     return neighbors;
-  }
-
-  private boolean makesNewClique(Graph graph, List<Integer> clique, int newNode) {
-    for (int node : clique) {
-      if (graph.matrix[node][newNode] == 0) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-  private boolean isClique(Object[] clique) {
-    for (Object i : clique) {
-      for (Object j : clique) {
-        if (graph.matrix[(int)i][(int)j] != 1 && i != j) {
-          return false;
-        }
-      }
-    }
-    return true;
   }
 }

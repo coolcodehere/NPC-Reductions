@@ -8,21 +8,19 @@ public class CNFToGraph {
     public Graph convertClique() {
         Graph graph = new Graph(cnf.numTerms * cnf.numClauses);
 
-        connectTerms(graph,false);
+        connectTerms(graph);
         return graph;
     }
 
-    private void connectTerms(Graph graph, boolean connectContradictory) {
+    private void connectTerms(Graph graph) {
         for (int i = 0; i < graph.size; i++) {
             int termValue = getCNFValue(i);
-            for (int j = 0; j < graph.size; i++) {
+            for (int j = 0; j < graph.size; j++) {
                 if (isInSameTerm(i, j) || i == j) {
                     continue;
                 }
 
-                if (connectContradictory && termValue == getCNFValue(j) * -1) {
-                    graph.addEdge(i, j);
-                } else if (!connectContradictory && termValue != getCNFValue(j) * -1) {
+                if (termValue != getCNFValue(j) * -1) {
                     graph.addEdge(i, j);
                 }
 

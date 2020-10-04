@@ -4,13 +4,11 @@ import java.io.File;
 
 class Main {
   public static void main(String[] args) {
-		Graph g = new Graph(4);
-		g.addEdge(0,1);
-		g.addEdge(0,2);
-		g.addEdge(1,2);
-		g.addEdge(1,3);
-		Clique c = new Clique(g);
-		c.findMaxClique();
+		String cnfFilename = "cnfs2020.txt";
+		CNFParser cnfParser = new CNFParser(cnfFilename);
+		ArrayList<CNF> cnfs = cnfParser.getCNFS();
+		CNFToGraph cnfToGraph = new CNFToGraph(cnfs.get(0));
+		Clique clique = new Clique(cnfToGraph.convertClique());
   }
 
 }
