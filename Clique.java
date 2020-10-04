@@ -5,7 +5,7 @@ import java.lang.*;
 public class Clique {
   //Current max clique
   List<Integer> max = new ArrayList<>();
-  List<List<Integer>> cliques = new ArrayList<>();
+  List<Integer> kClique = new ArrayList<>();
   long ms = System.currentTimeMillis();
   Graph graph;
 
@@ -18,25 +18,29 @@ public class Clique {
       for (int i = 0; i < graph.size; i++) {
         p.add(i);
       }
-      bronKerbosh(p, new HashSet<>(), new HashSet<>(), -1);
+      bronKerbosh(p, new HashSet<>(), new HashSet<>(), -1, 0);
       ms =  System.currentTimeMillis() - ms;
     return max;
   }
 
-  public List<List<Integer>> findKClique(int n) {
+  public List<Integer> findKClique(int n) {
     Set<Integer> p = new HashSet<>();
     for (int i = 0; i < graph.size; i++) {
       p.add(i);
     }
-    bronKerbosh(p, new HashSet<>(), new HashSet<>(), n);
+    bronKerbosh(p, new HashSet<>(), new HashSet<>(), n, System.currentTimeMillis());
     ms =  System.currentTimeMillis() - ms;
-    return cliques;
+    return kClique;
   }
 
-  public void bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x, int n) {
+  public boolean bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x, int n, long startTime) {
+    if (System.currentTimeMillis() - startTime > 10000 && n != -1) {
+      return true;
+    }
     if (union(p, x).isEmpty()) {
-      if (r.size() == n) {
-        cliques.add(setToList(r));
+      if (n != -1 && r.size() == n) {
+        kClique.addAll(r);
+        return true;
       }
 
       if (r.size() > max.size()) {
@@ -52,10 +56,13 @@ public class Clique {
       newR.addAll(r);
       newR.add(v);
 
-      bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)), n);
+      if (bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)), n, startTime)) {
+        return true;
+      }
       p.remove(v);
       x.add(v);
     }
+    return false;
   }
 
   private Set<Integer> union(Set<Integer> a, Set<Integer> b) {
