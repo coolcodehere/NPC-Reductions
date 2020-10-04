@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 import java.io.File;
 import java.util.ArrayList;
@@ -28,23 +29,23 @@ class CNFParser {
 				return;
 			}
 
-			CNF newCNF = new CNF(buildCNF(line));
+			String[] nums = line.split(" ");
+			CNF newCNF = new CNF(buildCNF(nums), Integer.parseInt(nums[0]));
 			cnfArray.add(newCNF);
 		}
 		
 	}
 
-	private int[][] buildCNF(String data) {
-		String[] nums = data.split(" ");
-		int termsPerClause = Integer.parseInt(nums[0]);
+	private int[][] buildCNF(String[] data) {
+		int termsPerClause = 3;
 
-		int numClauses = (nums.length - 1) / termsPerClause;
+		int numClauses = (data.length - 1) / termsPerClause;
 		int[][] cnf = new int[numClauses][termsPerClause];
 		int numsIndex = 1;
 
 		for (int i = 0; i < numClauses; i++) {
 			for (int j = 0; j < termsPerClause; j++) {
-				cnf[i][j] = Integer.parseInt(nums[numsIndex++]);
+				cnf[i][j] = Integer.parseInt(data[numsIndex++]);
 			}
 		}
 
