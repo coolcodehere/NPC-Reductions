@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -16,14 +17,17 @@ public class Clique {
 
   /***********PUBLIC METHODS***********/
   public List<Integer> findMaxClique() {
-      Set<Integer> r = new HashSet<>();
-      Set<Integer> p = new HashSet<>();
-      Set<Integer> x = new HashSet<>();
-      for (int i = 0; i < graph.getNumVertex(); i++) {
-        p.add(i);
-      }
-      bronKerbosh(p, r, x);
-      ms =  System.currentTimeMillis() - ms;
+    long start = System.currentTimeMillis();
+    Set<Integer> r = new HashSet<>();
+    Set<Integer> p = new HashSet<>();
+    Set<Integer> x = new HashSet<>();
+    for (int i = 0; i < graph.getNumVertex(); i++) {
+      p.add(i);
+    }
+    bronKerbosh(p, r, x);
+    long end = System.currentTimeMillis();
+    ms =  end - start;
+    Collections.sort(max);
     return max;
   }
 

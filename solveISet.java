@@ -1,31 +1,24 @@
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 class solveISet {
   public static void main(String[] args) {
-    String graphFilename = "graphs2020.txt";
-    GraphParser gr = new GraphParser(graphFilename);
-    ArrayList<Graph> graphs = gr.getGraphs();
+    // if (args.length < 1) {
+    //     return;
+    // }
+    // String filename = args[0];
+    String filename = "graphs2020.txt";
+    ArrayList<Graph> graphs = new GraphParser(filename).getGraphs();
+    ArrayList<Clique> cliques = new ArrayList<Clique>();
 
-    System.out.print(LocalTime.now());
+    for (Graph graph : graphs) {
+        cliques.add(new Clique(graph.getCompliment()));
+    }
+
+    System.out.println("* Max Independent Sets in graphs in " + filename + " : (reduced to K-Clique) *");
+    System.out.println("   (|V|,|E|) Independent Set (size, ms used)");
     for (int i = 0; i < graphs.size(); i++) {
-
-      invertGraph(graphs.get(i));
-      Clique clique = new Clique(graphs.get(i));
-      clique.findMaxClique();
+        System.out.println("G" + (i + 1) + " " + graphs.get(i).toString() + " " + cliques.get(i).toString());
     }
-    System.out.print(LocalTime.now());
-  }
-
-  public static void invertGraph(Graph graph) {
-    for (int i = 0; i < graph.getNumVertex(); i++) {
-      for (int j = 0; j < graph.getNumVertex(); j++) {
-        if (graph.getAdjMatrix()[i][j] == 0) {
-          graph.getAdjMatrix()[i][j] = 1;
-        } else {
-          graph.getAdjMatrix()[i][j] = 0;
-        }
-      }
-    }
+    System.out.println("***");
   }
 }
