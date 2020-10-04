@@ -9,17 +9,22 @@ public class solveClique {
     GraphParser gr = new GraphParser(graphFilename);
     ArrayList<Graph> graphs = gr.getGraphs();
 
-    System.out.print(LocalTime.now());
     for (int i = 0; i < graphs.size(); i++) {
+      System.out.print("G" + (i+1) + " ");
 
-      System.out.print("(" + i + ")");
       Clique clique = new Clique(graphs.get(i));
-      clique.findMaxClique();
+      List<Integer> maxClique = clique.findMaxClique();
+      System.out.print(formatClique(maxClique) + " ");
+      System.out.println("(size=" + maxClique.size() + ", " + clique.ms + " ms)");
     }
-    System.out.print(LocalTime.now());
+  }
 
-//    Clique clique = new Clique(graphs.get(0));
-//    clique.findMaxClique();
+  public static String formatClique(List<Integer> clique) {
+    String out = "{";
+    String cliqueArray = Arrays.toString(clique.toArray());
+    out += cliqueArray.substring(1, cliqueArray.length() - 1);
+    out += "}";
+    return out;
   }
 
 }
