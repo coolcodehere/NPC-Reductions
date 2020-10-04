@@ -1,17 +1,28 @@
 public class CNFToGraph {
     private CNF cnf;
+    private Graph graph;
+    private int k;
 
-    public CNFToGraph(CNF cnf) {
-        this.cnf = cnf;
+    /***********CONSTRUCTORS***********/
+    public CNFToGraph(CNF c) {
+        cnf = c;
+        graph = convertClique();
+        k = cnf.getNumVariables() + (2 * cnf.getNumClauses());
     }
 
+    /***********PUBLIC METHODS***********/
     public Graph convertClique() {
-        Graph graph = new Graph(cnf.numTerms * cnf.numClauses);
+        Graph graph = new Graph(cnf.getNumVariables() * cnf.getNumClauses());
 
         connectTerms(graph,false);
         return graph;
     }
 
+    public String toString() {
+        return "[n=" + cnf.getNumVariables() + " k=" + k + "]";
+    }
+
+    /***********PRIVATE METHODS***********/
     private void connectTerms(Graph graph, boolean connectContradictory) {
         for (int i = 0; i < graph.getNumVertex(); i++) {
             int termValue = getCNFValue(i);
@@ -25,31 +36,43 @@ public class CNFToGraph {
                 } else if (!connectContradictory && termValue != getCNFValue(j) * -1) {
                     graph.addEdge(i, j);
                 }
-
             }
         }
     }
 
     private int getCNFValue(int graphIndex) {
-        int termIdx = (graphIndex) % cnf.numTerms;
+        int termIdx = (graphIndex) % cnf.getNumVariables();
         int clauseIdx = 0;
 
-        if (cnf.numTerms < graphIndex) {
-            clauseIdx = (int)(Math.ceil(graphIndex / cnf.numTerms) - 1);
+        if (cnf.getNumVariables() < graphIndex) {
+            clauseIdx = (int)(Math.ceil(graphIndex / cnf.getNumVariables()) - 1);
         }
 
         return cnf.getTerm(clauseIdx, termIdx);
     }
 
     private void connectClause(Graph graph) {
-        for (int i = 0; i < graph.getNumVertex(); i+=cnf.numTerms) {
-            for (int j = 1; j < cnf.numTerms; j++) {
+        for (int i = 0; i < graph.getNumVertex(); i+=cnf.getNumVariables()) {
+            for (int j = 1; j < cnf.getNumVariables(); j++) {
                 graph.addEdge(i + j, i + j);
             }
         }
     }
 
     private boolean isInSameTerm(int fromIndex, int toIndex) {
-        return Math.floor(fromIndex/cnf.numTerms) == Math.floor(toIndex/cnf.numTerms);
+        return Math.floor(fromIndex/cnf.getNumVariables()) == Math.floor(toIndex/cnf.getNumVariables());
+    }
+
+    /***********GETTERS***********/
+	public CNF getCNF() {
+		return cnf;
+    }
+    
+    public Graph getGraph() {
+        return graph;
+    }
+
+    public int getK() {
+        return k;
     }
 }
