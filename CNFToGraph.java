@@ -1,7 +1,7 @@
-public class cnfToGraph {
+public class CNFToGraph {
     private CNF cnf;
 
-    public cnfToGraph(CNF cnf) {
+    public CNFToGraph(CNF cnf) {
         this.cnf = cnf;
     }
 
@@ -9,14 +9,6 @@ public class cnfToGraph {
         Graph graph = new Graph(cnf.numTerms * cnf.numClauses);
 
         connectTerms(graph,false);
-        return graph;
-    }
-
-    public Graph convertIndSet() {
-        Graph graph = new Graph(cnf.numTerms * cnf.numClauses);
-
-        connectClause(graph);
-        connectTerms(graph,true);
         return graph;
     }
 
