@@ -19,9 +19,6 @@ class CNF {
 		}
 	}
 
-	public int[] getClause(int i) {
-		return cnf[i];
-	}
 
 	public void printCNF() {
 		for (int[] arr : cnf) {

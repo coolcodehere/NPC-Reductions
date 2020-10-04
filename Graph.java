@@ -20,11 +20,6 @@ class Graph {
 		matrix[toIndex][fromIndex] = 1;
 	}
 
-	public void removeEdge(int fromIndex, int toIndex) {
-		matrix[fromIndex][toIndex] = 0;
-		matrix[toIndex][fromIndex] = 0;
-	}
-
 	public void printGraph() {
 		for (int i = 0; i < size; i++) {
 			for (int j = 0; j < size; j++) {

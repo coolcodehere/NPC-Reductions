@@ -32,9 +32,12 @@ public class solve3CNF {
           out += "F,";
         }
       }
+
+
       if (resultVals.isEmpty()) {
         System.out.printf("3CNF No.%d:[n=%d k=%d] No %d-clique; no solution (%d ms)\n", (i+1), n, k, k, clique.ms);
       } else {
+        out = out.substring(0, out.length() - 1);
         System.out.printf("3CNF No.%d:[n=%d k=%d] %s(%d ms)\n", (i+1), n, k, out, clique.ms);
       }
     }
