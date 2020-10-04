@@ -50,12 +50,12 @@ public class Graph {
 
 	public Graph getCompliment() {
 		Graph comp = new Graph(this);
-		for (int i = 1; i < numVertex; i++) {
-			for (int j = i + 1; j < numVertex; j++) {
-			  if (adjMatrix[i][j] == 0) {
-				addEdge(i, j);
+		for (int row = 0; row < numVertex; row++) {
+			for (int col = row + 1; col < numVertex; col++) {
+			  if (adjMatrix[row][col] == 0) {
+				comp.addEdge(row, col);
 			  } else {
-				removeEdge(i, j);
+				comp.removeEdge(row, col);
 			  }
 			}
 		  }

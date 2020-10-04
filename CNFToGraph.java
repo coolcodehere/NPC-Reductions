@@ -11,29 +11,28 @@ public class CNFToGraph {
     }
 
     /***********PUBLIC METHODS***********/
-    public Graph convertClique() {
-        Graph graph = new Graph(cnf.getNumVariables() * cnf.getNumClauses());
-
-        connectTerms(graph,false);
-        return graph;
-    }
 
     public String toString() {
         return "[n=" + cnf.getNumVariables() + " k=" + k + "]";
     }
 
     /***********PRIVATE METHODS***********/
-    private void connectTerms(Graph graph, boolean connectContradictory) {
+    private Graph convertClique() {
+        Graph graph = new Graph(cnf.getNumVariables() * cnf.getNumClauses());
+
+        connectTerms(graph);
+        return graph;
+    }
+
+    private void connectTerms(Graph graph) {
         for (int i = 0; i < graph.getNumVertex(); i++) {
             int termValue = getCNFValue(i);
-            for (int j = 0; j < graph.getNumVertex(); i++) {
+            for (int j = 0; j < graph.getNumVertex(); j++) {
                 if (isInSameTerm(i, j) || i == j) {
                     continue;
                 }
 
-                if (connectContradictory && termValue == getCNFValue(j) * -1) {
-                    graph.addEdge(i, j);
-                } else if (!connectContradictory && termValue != getCNFValue(j) * -1) {
+                if (termValue != getCNFValue(j) * -1) {
                     graph.addEdge(i, j);
                 }
             }

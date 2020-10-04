@@ -16,14 +16,14 @@ public class solve3CNF {
         }
 
         for (CNFToGraph cnfToGraph: cnfToGraphs) {
-            cliques.add(new Clique(cnfToGraph.convertClique()));
+            cliques.add(new Clique(cnfToGraph.getGraph()));
         }
 
         System.out.println("* Solve 3CNF in " + filename + ": (reduced to K-Clique) *");
         System.out.println("                    x: can be either T or F");
         for (int i = 0; i < cnfs.size(); i++) {
-            System.out.println("3CNF No."+ (i+1) + ":" + (i + 1) + " " + cnfToGraphs.get(i).toString() + " " + cliques.get(i).toString());
+            System.out.println("3CNF No."+ (i+1) + ":" + " " + cnfToGraphs.get(i).toString() + " (" + cliques.get(i).getMS() + " ms)");
         }
         System.out.println("***");
     }
-}
+  }

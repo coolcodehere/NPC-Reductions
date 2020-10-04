@@ -5,13 +5,13 @@ import java.util.List;
 import java.util.Set;
 
 public class Clique {
-  List<Integer> max = new ArrayList<>();
-  long ms = System.currentTimeMillis();
-  Graph graph;
+  private List<Integer> max = new ArrayList<>();
+  private long ms;
+  private Graph graph;
 
   /***********CONSTRUCTORS***********/
-  public Clique(Graph graph) {
-    this.graph = graph;
+  public Clique(Graph g) {
+    graph = g;
     findMaxClique();
   }
 
@@ -68,7 +68,7 @@ public class Clique {
     return unionSet;
   }
 
-  public Set<Integer> intersect(Set<Integer> a, Set<Integer> b) {
+  private Set<Integer> intersect(Set<Integer> a, Set<Integer> b) {
     Set<Integer> intersectSet = new HashSet<>();
 
     for (int num : a) {
@@ -76,13 +76,11 @@ public class Clique {
         intersectSet.add(num);
       }
     }
-
     for (int num : b) {
       if (a.contains(num)) {
         intersectSet.add(num);
       }
     }
-
     return intersectSet;
   }
 
@@ -96,23 +94,16 @@ public class Clique {
     return neighbors;
   }
 
-  private boolean makesNewClique(Graph graph, List<Integer> clique, int newNode) {
-    for (int node : clique) {
-      if (graph.getAdjMatrix()[node][newNode] == 0) {
-        return false;
-      }
-    }
-    return true;
+  /***********GETTERS***********/
+  public List<Integer> getMax() {
+    return max;
   }
 
-  private boolean isClique(Object[] clique) {
-    for (Object i : clique) {
-      for (Object j : clique) {
-        if (graph.getAdjMatrix()[(int)i][(int)j] != 1 && i != j) {
-          return false;
-        }
-      }
-    }
-    return true;
+  public long getMS() {
+    return ms;
+  }
+
+  public Graph getGraph() {
+    return graph;
   }
 }
