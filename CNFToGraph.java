@@ -13,9 +13,9 @@ public class CNFToGraph {
     }
 
     private void connectTerms(Graph graph, boolean connectContradictory) {
-        for (int i = 0; i < graph.size; i++) {
+        for (int i = 0; i < graph.getNumVertex(); i++) {
             int termValue = getCNFValue(i);
-            for (int j = 0; j < graph.size; i++) {
+            for (int j = 0; j < graph.getNumVertex(); i++) {
                 if (isInSameTerm(i, j) || i == j) {
                     continue;
                 }
@@ -42,7 +42,7 @@ public class CNFToGraph {
     }
 
     private void connectClause(Graph graph) {
-        for (int i = 0; i < graph.size; i+=cnf.numTerms) {
+        for (int i = 0; i < graph.getNumVertex(); i+=cnf.numTerms) {
             for (int j = 1; j < cnf.numTerms; j++) {
                 graph.addEdge(i + j, i + j);
             }

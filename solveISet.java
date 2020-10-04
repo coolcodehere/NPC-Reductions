@@ -18,12 +18,12 @@ class solveISet {
   }
 
   public static void invertGraph(Graph graph) {
-    for (int i = 0; i < graph.size; i++) {
-      for (int j = 0; j < graph.size; j++) {
-        if (graph.matrix[i][j] == 0) {
-          graph.matrix[i][j] = 1;
+    for (int i = 0; i < graph.getNumVertex(); i++) {
+      for (int j = 0; j < graph.getNumVertex(); j++) {
+        if (graph.getAdjMatrix()[i][j] == 0) {
+          graph.getAdjMatrix()[i][j] = 1;
         } else {
-          graph.matrix[i][j] = 0;
+          graph.getAdjMatrix()[i][j] = 0;
         }
       }
     }

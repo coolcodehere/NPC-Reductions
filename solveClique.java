@@ -1,30 +1,24 @@
-import java.util.*;
-import java.time.LocalTime;
+import java.util.ArrayList;
 
 public class solveClique {
+    public static void main(String[] args) {
+        // if (args.length < 1) {
+        //     return;
+        // }
+        // String filename = args[0];
+        String filename = "graphs2020.txt";
+        ArrayList<Graph> graphs = new GraphParser(filename).getGraphs();
+        ArrayList<Clique> cliques = new ArrayList<Clique>();
 
+        for (Graph graph : graphs) {
+            cliques.add(new Clique(graph));
+        }
 
-  public static void main(String args[]) {
-    String graphFilename = "graphs2020.txt";
-    GraphParser gr = new GraphParser(graphFilename);
-    ArrayList<Graph> graphs = gr.getGraphs();
-
-    for (int i = 0; i < graphs.size(); i++) {
-      System.out.print("G" + (i+1) + " ");
-
-      Clique clique = new Clique(graphs.get(i));
-      List<Integer> maxClique = clique.findMaxClique();
-      System.out.print(formatClique(maxClique) + " ");
-      System.out.println("(size=" + maxClique.size() + ", " + clique.ms + " ms)");
+        System.out.println("* Max Cliques in graphs in " + filename);
+        System.out.println("   (|V|,|E|) Cliques (size, ms used)");
+        for (int i = 0; i < graphs.size(); i++) {
+            System.out.println("G" + (i + 1) + " " + graphs.get(i).toString() + " " + cliques.get(i).toString());
+        }
+        System.out.println("***");
     }
-  }
-
-  public static String formatClique(List<Integer> clique) {
-    String out = "{";
-    String cliqueArray = Arrays.toString(clique.toArray());
-    out += cliqueArray.substring(1, cliqueArray.length() - 1);
-    out += "}";
-    return out;
-  }
-
 }

@@ -1,21 +1,25 @@
-import java.util.*;
-import java.lang.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Clique {
-  //Current max clique
   List<Integer> max = new ArrayList<>();
   long ms = System.currentTimeMillis();
   Graph graph;
 
+  /***********CONSTRUCTORS***********/
   public Clique(Graph graph) {
     this.graph = graph;
+    findMaxClique();
   }
 
+  /***********PUBLIC METHODS***********/
   public List<Integer> findMaxClique() {
       Set<Integer> r = new HashSet<>();
       Set<Integer> p = new HashSet<>();
       Set<Integer> x = new HashSet<>();
-      for (int i = 0; i < graph.size; i++) {
+      for (int i = 0; i < graph.getNumVertex(); i++) {
         p.add(i);
       }
       bronKerbosh(p, r, x);
@@ -23,6 +27,16 @@ public class Clique {
     return max;
   }
 
+  public String toString() {
+    String temp = "{";
+    for (int vertex : max) {
+        temp += vertex + ",";
+    }
+    temp += "\b} (size=" + max.size() + ", ms=" + ms + ")";
+    return temp;
+  }
+
+  /***********PRIVATE METHODS***********/
   public void bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x) {
     if (union(p, x).isEmpty() && r.size() > max.size()) {
       max = new ArrayList<>();
@@ -70,8 +84,8 @@ public class Clique {
 
   private Set<Integer> neighbors(int node) {
     Set<Integer> neighbors = new HashSet<>();
-    for (int i = 0; i < graph.size; i++) {
-      if (graph.matrix[node][i] == 1 && i != node) {
+    for (int i = 0; i < graph.getNumVertex(); i++) {
+      if (graph.getAdjMatrix()[node][i] == 1 && i != node) {
         neighbors.add(i);
       }
     }
@@ -80,7 +94,7 @@ public class Clique {
 
   private boolean makesNewClique(Graph graph, List<Integer> clique, int newNode) {
     for (int node : clique) {
-      if (graph.matrix[node][newNode] == 0) {
+      if (graph.getAdjMatrix()[node][newNode] == 0) {
         return false;
       }
     }
@@ -90,7 +104,7 @@ public class Clique {
   private boolean isClique(Object[] clique) {
     for (Object i : clique) {
       for (Object j : clique) {
-        if (graph.matrix[(int)i][(int)j] != 1 && i != j) {
+        if (graph.getAdjMatrix()[(int)i][(int)j] != 1 && i != j) {
           return false;
         }
       }
