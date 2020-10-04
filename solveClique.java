@@ -17,6 +17,9 @@ public class solveClique {
       clique.findMaxClique();
     }
     System.out.print(LocalTime.now());
+
+//    Clique clique = new Clique(graphs.get(0));
+//    clique.findMaxClique();
   }
 
 }
