@@ -4,11 +4,11 @@ import java.util.List;
 
 public class solve3CNF {
     public static void main(String args[]) {
-        // if (args.length < 1) {
-        //   return;
-        // }
-        // String filename = args[0];
-        String filename = "cnfs2020.txt";
+        if (args.length < 1) {
+            System.out.println("Usage: solveClique 3CNFFile");
+            return;
+        }
+        String filename = args[0];
         ArrayList<CNF> cnfs = new CNFParser(filename).getCNFS();
         ArrayList<CNFToGraph> cnfToGraphs = new ArrayList<CNFToGraph>();
         ArrayList<Clique> cliques = new ArrayList<Clique>();
