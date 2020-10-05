@@ -12,7 +12,6 @@ public class Clique {
   /***********CONSTRUCTORS***********/
   public Clique(Graph g) {
     graph = g;
-    findMaxClique();
   }
 
   /***********PUBLIC METHODS***********/

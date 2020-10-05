@@ -22,6 +22,7 @@ public class solve3CNF {
         System.out.println("* Solve 3CNF in " + filename + ": (reduced to K-Clique) *");
         System.out.println("                    x: can be either T or F");
         for (int i = 0; i < cnfs.size(); i++) {
+            cliques.get(i).findMaxClique();
             System.out.println("3CNF No."+ (i+1) + ":" + " " + cnfToGraphs.get(i).toString() + " (" + cliques.get(i).getMS() + " ms)");
         }
         System.out.println("***");

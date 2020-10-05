@@ -17,6 +17,7 @@ public class solveClique {
         System.out.println("* Max Cliques in graphs in " + filename);
         System.out.println("   (|V|,|E|) Cliques (size, ms used)");
         for (int i = 0; i < graphs.size(); i++) {
+            cliques.get(i).findMaxClique();
             System.out.println("G" + (i + 1) + " " + graphs.get(i).toString() + " " + cliques.get(i).toString());
         }
         System.out.println("***");

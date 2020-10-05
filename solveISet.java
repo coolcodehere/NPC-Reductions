@@ -17,6 +17,7 @@ public class solveISet {
 		System.out.println("* Max Independent Sets in graphs in " + filename + ": (reduced to K-Clique) *");
 		System.out.println("   (|V|,|E|) Independent Set (size, ms used)");
 		for (int i = 0; i < graphs.size(); i++) {
+			cliques.get(i).findMaxClique();
 			System.out.println("G" + (i + 1) + " " + graphs.get(i).toString() + " " + cliques.get(i).toString());
 		}
 		System.out.println("***");

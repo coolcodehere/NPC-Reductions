@@ -15,7 +15,7 @@ public class CNFToGraph {
 
     /***********PRIVATE METHODS***********/
     private Graph convertClique() {
-        Graph graph = new Graph(cnf.getNumVariables() * cnf.getNumClauses());
+        Graph graph = new Graph(cnf.getNumTerms() * cnf.getNumClauses());
 
         connectTerms(graph);
         return graph;

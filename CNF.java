@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-class CNF {
+public class CNF {
 	private int numVariables;
 	private int numTerms;
 	private int numClauses;
@@ -10,12 +10,12 @@ class CNF {
 	/***********CONSTRUCTORS***********/
 	public CNF(int[][] cnf, int numV) {
 		this.cnf = cnf;
-		numVariables = cnf[0].length;
+		numTerms = cnf[0].length;
 		numClauses = cnf.length;
 		numVariables = numV;
-		for (int[] arr : cnf) {
-			for (int num : arr) {
-				cnfVals.add(num);
+		for (int[] clause : cnf) {
+			for (int literal : clause) {
+				cnfVals.add(literal);
 			}
 		}
 	}
