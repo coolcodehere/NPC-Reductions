@@ -6,6 +6,7 @@ import java.util.Set;
 
 public class Clique {
   private List<Integer> max = new ArrayList<>();
+  private List<Integer> kClique = new ArrayList<>();
   private long ms;
   private Graph graph;
 
@@ -17,17 +18,28 @@ public class Clique {
   /***********PUBLIC METHODS***********/
   public List<Integer> findMaxClique() {
     long start = System.currentTimeMillis();
-    Set<Integer> r = new HashSet<>();
     Set<Integer> p = new HashSet<>();
-    Set<Integer> x = new HashSet<>();
     for (int i = 0; i < graph.getNumVertex(); i++) {
       p.add(i);
     }
-    bronKerbosh(p, r, x);
+    bronKerbosh(p, new HashSet<>(), new HashSet<>(), -1, 0);
     long end = System.currentTimeMillis();
     ms =  end - start;
     Collections.sort(max);
     return max;
+  }
+
+  public List<Integer> findKClique(int n) {
+    long start = System.currentTimeMillis();
+    Set<Integer> p = new HashSet<>();
+    for (int i = 0; i < graph.getNumVertex(); i++) {
+      p.add(i);
+    }
+    bronKerbosh(p, new HashSet<>(), new HashSet<>(), n, System.currentTimeMillis());
+    long end = System.currentTimeMillis();
+    ms =  end - start;
+    Collections.sort(kClique);
+    return kClique;
   }
 
   public String toString() {
@@ -40,10 +52,19 @@ public class Clique {
   }
 
   /***********PRIVATE METHODS***********/
-  public void bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x) {
-    if (union(p, x).isEmpty() && r.size() > max.size()) {
-      max = new ArrayList<>();
-      max.addAll(r);
+  private boolean bronKerbosh(Set<Integer> p, Set<Integer> r, Set<Integer> x, int n, long startTime) {
+    if (System.currentTimeMillis() - startTime >= 500 && n != -1) {
+      return true;
+    }
+    if (union(p, x).isEmpty()) {
+      if (n != -1 && r.size() == n) {
+        kClique.addAll(r);
+        return true;
+      }
+
+      if (r.size() > max.size()) {
+        max = setToList(r);
+      }
     }
 
     Object[] pArr = p.toArray();
@@ -54,10 +75,13 @@ public class Clique {
       newR.addAll(r);
       newR.add(v);
 
-      bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)));
+      if (bronKerbosh(intersect(p, neighbors(v)), newR, intersect(x, neighbors(v)), n, startTime)) {
+        return true;
+      }
       p.remove(v);
       x.add(v);
     }
+    return false;
   }
 
   private Set<Integer> union(Set<Integer> a, Set<Integer> b) {
@@ -65,6 +89,12 @@ public class Clique {
     unionSet.addAll(a);
     unionSet.addAll(b);
     return unionSet;
+  }
+
+  private List<Integer> setToList(Set<Integer> set) {
+    List<Integer> out = new ArrayList<>();
+    out.addAll(set);
+    return out;
   }
 
   private Set<Integer> intersect(Set<Integer> a, Set<Integer> b) {
@@ -75,11 +105,13 @@ public class Clique {
         intersectSet.add(num);
       }
     }
+
     for (int num : b) {
       if (a.contains(num)) {
         intersectSet.add(num);
       }
     }
+
     return intersectSet;
   }
 
